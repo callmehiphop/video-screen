@@ -21,7 +21,7 @@ module.exports = function (filename, options) {
 
 	which('ffmpeg', function (err, command) {
 		if (err) {
-			stream.emit('error', new Error('unable to locate `ffmpeg`'));
+			stream.emit('error', err);
       return stream.end();
 		}
 
@@ -42,9 +42,7 @@ module.exports = function (filename, options) {
 			stream.end();
 		});
 
-		ffmpeg.stdout.on('data', function (data) {
-			stream.push(data);
-		});
+    ffmpeg.stdout.pipe(stream);
 	});
 
 	return stream;
