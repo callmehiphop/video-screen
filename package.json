@@ -1,0 +1,25 @@
+{
+  "name": "video-screen",
+  "version": "0.0.0",
+  "description": "Take a screenshot of a video",
+  "main": "index.js",
+  "bin": "cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "video",
+    "screenshot",
+    "ffmpeg",
+    "thumbnail"
+  ],
+  "author": "Dave Gramlich",
+  "license": "MIT",
+  "dependencies": {
+    "is-video": "^1.0.1",
+    "meow": "^3.3.0",
+    "object-assign": "^3.0.0",
+    "through2": "^2.0.0",
+    "which": "^1.1.1"
+  }
+}
