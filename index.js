@@ -11,11 +11,6 @@ module.exports = function (filename, options) {
 		throw new TypeError('missing required parameter `filename`'); // consider custom error type..?
 	}
 
-	if (typeof options !== 'object') {
-		// callback = options;
-		options = {};
-	}
-
 	var stream = through();
 
 	options = assign({
@@ -26,7 +21,8 @@ module.exports = function (filename, options) {
 
 	which('ffmpeg', function (err, command) {
 		if (err) {
-			return callback(new Error('unable to locate `ffmpeg`'));
+			stream.emit('error', new Error('unable to locate `ffmpeg`'));
+      return stream.end();
 		}
 
 		var ffmpeg = spawn(command, [
@@ -43,7 +39,7 @@ module.exports = function (filename, options) {
 		});
 
 		ffmpeg.on('exit', function () {
-			stream.end();	
+			stream.end();
 		});
 
 		ffmpeg.stdout.on('data', function (data) {
