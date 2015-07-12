@@ -3,7 +3,13 @@
   "version": "0.0.0",
   "description": "Take a screenshot of a video",
   "main": "index.js",
-  "bin": "cli.js",
+  "bin": {
+    "video-screen": "cli.js"
+  },
+  "files": [
+    "index.js",
+    "cli.js"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,10 +22,19 @@
   "author": "Dave Gramlich",
   "license": "MIT",
   "dependencies": {
+    "concat-stream": "^1.5.0",
     "is-video": "^1.0.1",
     "meow": "^3.3.0",
     "object-assign": "^3.0.0",
     "through2": "^2.0.0",
     "which": "^1.1.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/callmehiphop/video-screen.git"
+  },
+  "bugs": {
+    "url": "https://github.com/callmehiphop/video-screen/issues"
+  },
+  "homepage": "https://github.com/callmehiphop/video-screen#readme"
 }

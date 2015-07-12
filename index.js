@@ -5,6 +5,7 @@ var assign = require('object-assign');
 var through = require('through2');
 var which = require('which');
 var spawn = require('child_process').spawn;
+var concat = require('concat-stream');
 
 /**
  * takes screenshot of specified video, if a callback is provided it returns
@@ -51,17 +52,10 @@ module.exports = function (filename, options, callback) {
     return stream;
   }
 
-  var screenshot = new Buffer(0);
-
-  stream.on('error', callback);
-
-  stream.on('end', function () {
-    callback(null, screenshot);
-  });
-
-  stream.on('data', function (data) {
-    screenshot = Buffer.concat([screenshot, data]);
-  });
+  stream.on('error', callback)
+    .pipe(concat(function (screenshot) {
+      callback(null, screenshot);
+    }));
 };
 
 /**
