@@ -12,7 +12,7 @@ var spawn = require('child_process').spawn;
  *
  * @param {string} filename
  * @param {object} options
- * @param {function} callback
+ * @param {function} [callback]
  *
  * @example
  *
