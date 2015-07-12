@@ -6,18 +6,73 @@ var through = require('through2');
 var which = require('which');
 var spawn = require('child_process').spawn;
 
-module.exports = function (filename, options) {
-	if (!isVideo(filename)) {
-		throw new TypeError('missing required parameter `filename`'); // consider custom error type..?
-	}
+/**
+ * takes screenshot of specified video, if a callback is provided it returns
+ * the image as a buffer, otherwise it will return a stream
+ *
+ * @param {string} filename
+ * @param {object} options
+ * @param {function} callback
+ *
+ * @example
+ *
+ * videoScreen('/path/to/video.mp4', function (err, data) {
+ *   fs.writeFile('screenshot.png', data, function (err) {
+ *     if (err) return console.log(err);
+ *     console.log('screenshot saved!');
+ *   });
+ * })
+ *
+ * videoScreen('/other/path/to/video.mp4')
+ *   .on('error', function (err) {
+ *     console.log(err);
+ *   })
+ *   .pipe(fs.createWriteStream('screenshot.jpg'));
+ */
+module.exports = function (filename, options, callback) {
+  if (!isVideo(filename)) {
+    throw new TypeError('invalid parameter `filename`');
+  }
 
+  if (typeof options !== 'object') {
+    callback = options;
+    options = {};
+  }
+
+  options = assign({
+    time: '00:00:01',
+    width: 200,
+    height: 125
+  }, options);
+
+  var stream = takeScreenshot(filename, options);
+
+  if (typeof callback !== 'function') {
+    return stream;
+  }
+
+  var screenshot = new Buffer(0);
+
+  stream.on('error', callback);
+
+  stream.on('end', function () {
+    callback(null, screenshot);
+  });
+
+  stream.on('data', function (data) {
+    screenshot = Buffer.concat([screenshot, data]);
+  });
+};
+
+/**
+ * spawns ffmpeg and tries to extract a screenshot from the provided video
+ *
+ * @param {string} filename
+ * @param {object} options
+ * @return {stream}
+ */
+function takeScreenshot (filename, options) {
 	var stream = through();
-
-	options = assign({
-		time: '00:00:01',
-		width: 200,
-		height: 125
-	}, options);
 
 	which('ffmpeg', function (err, command) {
 		if (err) {
@@ -46,4 +101,4 @@ module.exports = function (filename, options) {
 	});
 
 	return stream;
-};
+}
