@@ -13,11 +13,18 @@ var fs = require('fs');
 
 videoScreen('path/to/video.mp4')
 	.pipe(fs.createWriteStream('video.png'));
+
+// or if streams aren't your thing
+videoScreen('path/to/video.mp4', function (err, screenshot) {
+  fs.writeFile('screenshot.png', screenshot, function () {
+    console.log('screenshot saved!');
+  });
+});
 ```
 
 ## API
 
-### videoScreen(filename, [options])
+### videoScreen(filename, [options], [callback])
 
 ## filename
 
