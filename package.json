@@ -1,6 +1,6 @@
 {
   "name": "video-screen",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Take a screenshot of a video",
   "main": "index.js",
   "bin": {
@@ -10,16 +10,13 @@
     "index.js",
     "cli.js"
   ],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [
     "video",
     "screenshot",
     "ffmpeg",
     "thumbnail"
   ],
-  "author": "Dave Gramlich",
+  "author": "Dave Gramlich <callmehiphop@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "concat-stream": "^1.5.0",

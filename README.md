@@ -3,7 +3,14 @@
 
 > Generate screenshots from videos
 
+## Install
+
 This module requires [ffmpeg](https://www.ffmpeg.org/)
+
+```sh
+$ npm install --save video-screen
+```
+
 
 ## Usage
 
@@ -53,6 +60,8 @@ The width of the generated screenshot
 
 Type: `number`
 Default: `125`
+
+The height of the generated screenshot
 
 ## CLI
 

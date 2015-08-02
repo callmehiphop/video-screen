@@ -12,7 +12,7 @@ var concat = require('concat-stream');
  * the image as a buffer, otherwise it will return a stream
  *
  * @param {string} filename
- * @param {object} options
+ * @param {object} [options]
  * @param {function} [callback]
  *
  * @example
